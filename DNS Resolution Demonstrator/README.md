@@ -7,7 +7,7 @@ A Flask web application that demonstrates how DNS resolution works by showing th
 - Lookup any domain name and see the DNS resolution process
 - Interactive simulation showing packet movement between DNS servers
 - Support for both recursive and iterative DNS resolution modes
-- Visual representation of the DNS hierarchy with world map visualization
+- Visual representation of the DNS hierarchy
 - Detailed path summary showing the exact servers contacted during resolution
 - Real-time DNS lookups using actual DNS commands on your local machine
 
@@ -38,7 +38,7 @@ A Flask web application that demonstrates how DNS resolution works by showing th
 
 ## How It Works
 
-The application uses a combination of the `dnspython` library and actual DNS commands (`dig`) to perform DNS lookups and gather information about the resolution process. When you enter a domain name, the application:
+The application uses a combination of the `dns` library of python and actual DNS commands (`dig`) to perform DNS lookups and gather information about the resolution process. When you enter a domain name, the application:
 
 1. Executes real DNS commands on your local machine
 2. Tracks the exact path followed during resolution
@@ -50,18 +50,6 @@ The application supports two query modes:
 
 - **Recursive Mode**: Your computer sends a query to a DNS resolver, which then handles the entire resolution process for you
 - **Iterative Mode**: Your computer directly contacts each DNS server in the chain until it gets the final answer
-
-## Technologies Used
-
-- **Backend**:
-  - Flask: Web framework
-  - dnspython: DNS toolkit for Python
-  - subprocess: For executing DNS commands (`dig`)
-
-- **Frontend**:
-  - HTML/CSS: For structure and styling
-  - JavaScript: For interactive simulations and visualizations
-  - SVG: For DNS packet movement animations
 
 ## Requirements
 
