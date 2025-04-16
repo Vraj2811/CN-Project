@@ -26,7 +26,7 @@ Traceroot is a web-based tool that provides visual traceroute analysis with anim
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/traceroot.git
+   git clone https://github.com/Vraj2811/CN-Project.git
    cd traceroot
    ```
 
@@ -53,7 +53,7 @@ Traceroot is a web-based tool that provides visual traceroute analysis with anim
 
 1. Start the Flask server:
    ```
-   flask run
+   python app.py
    ```
 
 2. Open your browser and navigate to:

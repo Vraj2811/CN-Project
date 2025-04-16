@@ -29,7 +29,7 @@ A Flask-based web application for learning about the Address Resolution Protocol
 
 1. Clone the repository:
    ```
-   git clone git@gitlab.com:cn5415516/computer-networks-project.git
+   git clone https://github.com/Vraj2811/CN-Project.git
    cd ARP_Project
    ```
 
@@ -37,6 +37,7 @@ A Flask-based web application for learning about the Address Resolution Protocol
    ```
    python -m venv venv
    venv\Scripts\activate  # On Windows
+   source venv/bin/activate  # On Linux
    ```
 
 3. Install the required packages:
@@ -77,7 +78,7 @@ A Flask-based web application for learning about the Address Resolution Protocol
 - python-dotenv 1.0.0
 - Werkzeug 2.3.7
 - Modern web browser with JavaScript enabled
-- Linux (Arch Linux)
+- Windows OS
 
 ## Educational Purpose
 

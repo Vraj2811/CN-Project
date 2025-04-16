@@ -39,7 +39,7 @@ A comprehensive DHCP (Dynamic Host Configuration Protocol) simulator built with 
 
 1. Clone the repository:
    ```
-   git clone git@gitlab.com:cn5415516/computer-networks-project.git
+   git clone https://github.com/Vraj2811/CN-Project.git
    cd DHCP_Project
    ```
 
@@ -47,6 +47,8 @@ A comprehensive DHCP (Dynamic Host Configuration Protocol) simulator built with 
    ```
    python -m venv venv
    venv\Scripts\activate  # On Windows
+   source venv/bin/activate  # On Linux
+   ```
 
 3. **Setup**:
    ```
@@ -96,7 +98,3 @@ This simulator serves as an educational tool for:
 - ipaddress 1.0.23
 - Modern web browser with JavaScript enabled
 - Windows OS
-
-## License
-
-This project is created for educational purposes as part of a computer networks course.

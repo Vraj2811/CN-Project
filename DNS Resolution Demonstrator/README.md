@@ -70,7 +70,3 @@ The application supports two query modes:
 - dnspython 2.7.0
 - Modern web browser with JavaScript enabled
 - Linux (Arch Linux)
-
-## License
-
-This project is open source and available under the MIT License.

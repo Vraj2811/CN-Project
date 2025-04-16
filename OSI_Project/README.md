@@ -57,7 +57,7 @@ An interactive educational tool built with Flask that visualizes the OSI (Open S
 
 1. Clone the repository:
    ```
-   git clone <repository-url>
+   git clone https://github.com/Vraj2811/CN-Project.git
    cd OSI_Project
    ```
 
@@ -119,7 +119,3 @@ This simulator serves as an educational tool for:
 - Werkzeug 2.3.7
 - Modern web browser with JavaScript enabled
 - Windows OS
-
-## License
-
-This project is created for educational purposes as part of a computer networks course.

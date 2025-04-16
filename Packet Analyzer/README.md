@@ -29,7 +29,7 @@ A web-based tool for analyzing network packet captures (PCAP files) to learn abo
 
 1. Clone the repository:
    ```
-   git clone git@gitlab.com:cn5415516/computer-networks-project.git
+   git clone https://github.com/Vraj2811/CN-Project.git
    cd Packet-Analyzer
    ```
 
