@@ -1,0 +1,67 @@
+/* Custom styles for Packet Analyzer */
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+}
+
+/* Table styles */
+.table-responsive {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+/* Card styles */
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+/* Protocol colors */
+.protocol-http {
+    color: #28a745;
+}
+
+.protocol-dns {
+    color: #007bff;
+}
+
+.protocol-tcp {
+    color: #6c757d;
+}
+
+.protocol-udp {
+    color: #fd7e14;
+}
+
+.protocol-icmp {
+    color: #dc3545;
+}
+
+.protocol-arp {
+    color: #6f42c1;
+}
+
+/* Highlight for search results */
+.highlight {
+    background-color: #fff3cd;
+    padding: 0.1rem 0.2rem;
+    border-radius: 0.2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .filter-section .row {
+        margin-bottom: 1rem;
+    }
+}

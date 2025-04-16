@@ -1,0 +1,140 @@
+/* DNS Record Types Styles */
+
+.dns-info h2:nth-of-type(2) {
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 80px;
+    margin-bottom: 30px;
+    color: #2c3e50;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.dns-info h2:nth-of-type(2)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: #3498db;
+    border-radius: 2px;
+}
+
+.record-types-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.record-type {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border-top: 5px solid #3498db;
+    position: relative;
+    overflow: hidden;
+}
+
+.record-type:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.record-type h3 {
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 1.3rem;
+    position: relative;
+    display: inline-block;
+}
+
+.record-type h3::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background-color: #3498db;
+    border-radius: 1.5px;
+}
+
+.record-type p {
+    color: #555;
+    margin: 0;
+    line-height: 1.5;
+    font-size: 1rem;
+}
+
+/* Different colors for different record types */
+.record-type:nth-child(1) {
+    border-top-color: #3498db; /* A Record - Blue */
+}
+
+.record-type:nth-child(2) {
+    border-top-color: #9b59b6; /* AAAA Record - Purple */
+}
+
+.record-type:nth-child(3) {
+    border-top-color: #2ecc71; /* CNAME Record - Green */
+}
+
+.record-type:nth-child(4) {
+    border-top-color: #e74c3c; /* MX Record - Red */
+}
+
+.record-type:nth-child(5) {
+    border-top-color: #f39c12; /* NS Record - Orange */
+}
+
+.record-type:nth-child(6) {
+    border-top-color: #1abc9c; /* TXT Record - Turquoise */
+}
+
+.record-type:nth-child(7) {
+    border-top-color: #34495e; /* SOA Record - Dark Blue */
+}
+
+.record-type:nth-child(1) h3::after {
+    background-color: #3498db;
+}
+
+.record-type:nth-child(2) h3::after {
+    background-color: #9b59b6;
+}
+
+.record-type:nth-child(3) h3::after {
+    background-color: #2ecc71;
+}
+
+.record-type:nth-child(4) h3::after {
+    background-color: #e74c3c;
+}
+
+.record-type:nth-child(5) h3::after {
+    background-color: #f39c12;
+}
+
+.record-type:nth-child(6) h3::after {
+    background-color: #1abc9c;
+}
+
+.record-type:nth-child(7) h3::after {
+    background-color: #34495e;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .record-types-info {
+        grid-template-columns: 1fr;
+    }
+}

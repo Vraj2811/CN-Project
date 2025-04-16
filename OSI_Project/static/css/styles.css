@@ -1,0 +1,713 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.tab-content {
+    background-color: #fff;
+    min-height: 500px;
+}
+
+/* OSI Model Layer Styles */
+.osi-layers {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.osi-layer {
+    display: flex;
+    height: 60px;
+    margin-bottom: 2px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.osi-layer:hover {
+    transform: translateX(10px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.layer-number {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px 0 0 5px;
+}
+
+.layer-name {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    font-size: 18px;
+    font-weight: 500;
+    color: white;
+}
+
+/* Layer Colors */
+.application {
+    background-color: #6610f2;
+}
+
+.presentation {
+    background-color: #6f42c1;
+}
+
+.session {
+    background-color: #007bff;
+}
+
+.transport {
+    background-color: #17a2b8;
+}
+
+.network {
+    background-color: #28a745;
+}
+
+.datalink {
+    background-color: #fd7e14;
+}
+
+.physical {
+    background-color: #dc3545;
+}
+
+/* Layer Details Card */
+.layer-details {
+    height: 100%;
+    min-height: 300px;
+}
+
+/* OSI-TCP/IP Mapping */
+.osi-tcpip-mapping {
+    display: flex;
+    margin-top: 15px;
+}
+
+.osi-column, .tcpip-column {
+    flex: 1;
+}
+
+.mapping-layer {
+    padding: 8px;
+    margin-bottom: 2px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.tcpip-layer {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.tcpip-layer:hover {
+    background-color: #e9ecef;
+}
+
+/* Packet Flow Animation */
+.packet-flow-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 200px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.sender, .receiver {
+    text-align: center;
+    width: 120px;
+}
+
+.device-icon {
+    font-size: 40px;
+    margin: 10px 0;
+}
+
+.packet-animation-area {
+    flex-grow: 1;
+    height: 100%;
+    position: relative;
+    margin: 0 20px;
+}
+
+.packet-container {
+    position: relative;
+    height: 100%;
+}
+
+.packet {
+    position: absolute;
+    width: 60px;
+    height: 30px;
+    background-color: #007bff;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    transition: transform 0.5s linear;
+}
+
+/* TCP Communication Styles */
+.tcp-handshake-container, .udp-container, .http-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 200px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.handshake-animation-area, .udp-animation-area, .http-animation-area {
+    flex-grow: 1;
+    height: 100%;
+    position: relative;
+    margin: 0 20px;
+}
+
+.connection-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #6c757d;
+    transform: translateY(-50%);
+}
+
+.tcp-packet, .udp-packet, .http-packet {
+    position: absolute;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    transition: all 0.8s linear; /* Slowed down transition */
+}
+
+.tcp-packet.syn {
+    background-color: #007bff;
+}
+
+.tcp-packet.syn-ack {
+    background-color: #28a745;
+}
+
+.tcp-packet.ack {
+    background-color: #17a2b8;
+}
+
+.tcp-packet.fin {
+    background-color: #dc3545;
+}
+
+.tcp-packet.data {
+    background-color: #6610f2;
+}
+
+/* TCP Packet Structure Styles */
+.tcp-header-diagram {
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.header-row {
+    display: flex;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.header-row:last-child {
+    border-bottom: none;
+}
+
+.header-field {
+    padding: 8px;
+    text-align: center;
+    border-right: 1px solid #dee2e6;
+    flex: 1;
+    font-size: 14px;
+}
+
+.header-field:last-child {
+    border-right: none;
+}
+
+.header-field.small {
+    flex: 0.5;
+}
+
+.data-section {
+    background-color: #e9ecef;
+}
+
+.tcp-flags .flag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.tcp-flags .badge {
+    font-size: 12px;
+    padding: 5px 8px;
+}
+
+/* TCP Phases Tabs */
+.tcp-phases-tabs .nav-tabs {
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 0;
+}
+
+.tcp-phases-tabs .nav-link {
+    font-size: 14px;
+    padding: 5px 10px;
+}
+
+.tcp-phases-tabs .tab-content {
+    background-color: #f8f9fa;
+}
+
+.phase-info {
+    padding: 10px;
+}
+
+.phase-info h6 {
+    color: #007bff;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.phase-info p {
+    margin-bottom: 8px;
+}
+
+.phase-info ol, .phase-info ul {
+    margin-bottom: 8px;
+    padding-left: 25px;
+}
+
+.phase-info li {
+    margin-bottom: 4px;
+}
+
+/* Device Highlight States */
+.device.highlight {
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.7);
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+
+.device.connected {
+    box-shadow: 0 0 15px rgba(40, 167, 69, 0.7);
+    transition: all 0.3s ease;
+}
+
+.device.processing {
+    box-shadow: 0 0 15px rgba(255, 193, 7, 0.7);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.udp-packet {
+    background-color: #28a745;
+}
+
+.udp-packet.lost {
+    background-color: #dc3545;
+    opacity: 0.7;
+}
+
+.http-packet {
+    background-color: #6610f2;
+}
+
+/* HTTP Request-Response Styles */
+.current-step-indicator {
+    transition: all 0.3s ease;
+}
+
+.http-steps-timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.http-steps-timeline li {
+    position: relative;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.http-steps-timeline li::before {
+    content: '';
+    position: absolute;
+    left: -30px;
+    top: 15px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    border: 2px solid #dee2e6;
+    z-index: 1;
+}
+
+.http-steps-timeline li::after {
+    content: '';
+    position: absolute;
+    left: -21px;
+    top: 35px;
+    width: 2px;
+    height: calc(100% + 5px);
+    background-color: #dee2e6;
+    z-index: 0;
+}
+
+.http-steps-timeline li:last-child::after {
+    display: none;
+}
+
+.http-steps-timeline li.active {
+    background-color: #f8f9fa;
+    border-left: 3px solid #007bff;
+}
+
+.http-steps-timeline li.active::before {
+    background-color: #007bff;
+    border-color: #0056b3;
+}
+
+.http-steps-timeline li.completed {
+    color: #6c757d;
+}
+
+.http-steps-timeline li.completed::before {
+    background-color: #28a745;
+    border-color: #1e7e34;
+}
+
+.http-message-structure {
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.http-message-part {
+    padding: 8px;
+    border-bottom: 1px solid #dee2e6;
+    background-color: #f8f9fa;
+}
+
+.http-message-part:last-child {
+    border-bottom: none;
+}
+
+.progress {
+    height: 10px;
+}
+
+.progress-bar {
+    transition: width 0.5s ease;
+    background-color: #007bff;
+}
+
+/* TCP vs UDP Comparison */
+.tcp-animation, .udp-animation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 150px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    position: relative;
+}
+
+.tcp-packets-container, .udp-packets-container {
+    flex-grow: 1;
+    height: 100%;
+    position: relative;
+    margin: 0 15px;
+}
+
+.tcp-packet-animation, .udp-packet-animation {
+    position: absolute;
+    width: 40px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: bold;
+    color: white;
+    transition: all 0.3s linear;
+}
+
+.tcp-packet-animation {
+    background-color: #007bff;
+}
+
+.udp-packet-animation {
+    background-color: #28a745;
+}
+
+.tcp-ack {
+    background-color: #6c757d;
+    width: 30px;
+    height: 15px;
+}
+
+/* Protocol Steps Timeline */
+.protocol-steps-timeline {
+    position: relative;
+    padding-left: 30px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.protocol-steps-timeline li {
+    position: relative;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.protocol-steps-timeline li::before {
+    content: '';
+    position: absolute;
+    left: -30px;
+    top: 15px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    border: 2px solid #dee2e6;
+    z-index: 1;
+}
+
+.protocol-steps-timeline li::after {
+    content: '';
+    position: absolute;
+    left: -21px;
+    top: 35px;
+    width: 2px;
+    height: calc(100% + 5px);
+    background-color: #dee2e6;
+    z-index: 0;
+}
+
+.protocol-steps-timeline li:last-child::after {
+    display: none;
+}
+
+.protocol-steps-timeline li.active {
+    background-color: #f8f9fa;
+}
+
+.protocol-steps-timeline li.active.tcp-step {
+    border-left: 3px solid #007bff;
+}
+
+.protocol-steps-timeline li.active.udp-step {
+    border-left: 3px solid #28a745;
+}
+
+.protocol-steps-timeline li.active.tcp-step::before {
+    background-color: #007bff;
+    border-color: #0056b3;
+}
+
+.protocol-steps-timeline li.active.udp-step::before {
+    background-color: #28a745;
+    border-color: #1e7e34;
+}
+
+.protocol-steps-timeline li.completed {
+    color: #6c757d;
+}
+
+.protocol-steps-timeline li.completed.tcp-step::before {
+    background-color: #007bff;
+    border-color: #0056b3;
+    opacity: 0.7;
+}
+
+.protocol-steps-timeline li.completed.udp-step::before {
+    background-color: #28a745;
+    border-color: #1e7e34;
+    opacity: 0.7;
+}
+
+/* Packet Structure Diagram */
+.packet-structure-diagram {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.packet-field {
+    padding: 8px;
+    border-bottom: 1px solid #dee2e6;
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: space-between;
+}
+
+.packet-field:last-child {
+    border-bottom: none;
+}
+
+.packet-field.tcp-field {
+    border-left: 3px solid #007bff;
+}
+
+.packet-field.udp-field {
+    border-left: 3px solid #28a745;
+}
+
+.packet-field .field-name {
+    font-weight: bold;
+}
+
+.packet-field .field-size {
+    color: #6c757d;
+    font-size: 0.9em;
+}
+
+/* Datagram Structure */
+.datagram-structure {
+    border: 2px solid #28a745;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.datagram-header {
+    display: flex;
+}
+
+.datagram-field {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #dee2e6;
+    flex: 1;
+    font-size: 14px;
+}
+
+.datagram-data {
+    background-color: #e9ecef;
+}
+
+/* Animation Effects */
+.highlight {
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.7);
+    transform: scale(1.05);
+}
+
+.active-layer {
+    transform: translateX(20px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Encapsulation/Decapsulation Visualization */
+.data-unit {
+    position: absolute;
+    border-radius: 5px;
+    transition: all 0.5s ease;
+}
+
+.application-data {
+    background-color: #6610f2;
+    z-index: 7;
+}
+
+.presentation-data {
+    background-color: #6f42c1;
+    z-index: 6;
+}
+
+.session-data {
+    background-color: #007bff;
+    z-index: 5;
+}
+
+.transport-data {
+    background-color: #17a2b8;
+    z-index: 4;
+}
+
+.network-data {
+    background-color: #28a745;
+    z-index: 3;
+}
+
+.datalink-data {
+    background-color: #fd7e14;
+    z-index: 2;
+}
+
+.physical-data {
+    background-color: #dc3545;
+    z-index: 1;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .osi-layer {
+        height: 50px;
+    }
+
+    .layer-number {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    .layer-name {
+        font-size: 16px;
+    }
+
+    .packet-flow-container, .tcp-handshake-container, .udp-container, .http-container {
+        height: 150px;
+    }
+
+    .device-icon {
+        font-size: 30px;
+    }
+}

@@ -1,0 +1,591 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container > h1 {
+    color: #0d6efd;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #dee2e6;
+    margin-bottom: 1.5rem;
+}
+
+/* Card Styles */
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.card-header h3, .card-header h5 {
+    margin-bottom: 0;
+}
+
+/* Network Diagram Styles */
+.network-diagram {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    position: relative;
+    min-height: 150px;
+    overflow: hidden; /* Ensure animations don't overflow */
+}
+
+.network-device {
+    text-align: center;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    width: 150px;
+    transition: all 0.3s ease;
+}
+
+.network-device.client {
+    background-color: #e6f7ff;
+    border-color: #91d5ff;
+}
+
+.network-device.server {
+    background-color: #f6ffed;
+    border-color: #b7eb8f;
+}
+
+.network-device.attacker {
+    background-color: #fff2f0;
+    border-color: #ffccc7;
+}
+
+.network-device.victim {
+    background-color: #e6f7ff;
+    border-color: #91d5ff;
+}
+
+.network-device.legitimate {
+    background-color: #f6ffed;
+    border-color: #b7eb8f;
+}
+
+.network-device.internet {
+    background-color: #f0f5ff;
+    border-color: #adc6ff;
+}
+
+.network-connection {
+    height: 5px;
+    background-color: #ddd;
+    flex-grow: 1;
+    margin: 0 20px;
+    position: relative;
+}
+
+.device-info {
+    font-size: 0.8rem;
+    margin-top: 5px;
+    color: #666;
+}
+
+/* DHCP Packet Styles */
+.dhcp-packet {
+    position: absolute;
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: 0.7rem;
+    z-index: 100;
+    opacity: 0;
+    white-space: nowrap;
+    transition: all 0.5s ease;
+}
+
+.dhcp-packet.discover {
+    background-color: #007bff;
+    color: white;
+}
+
+.dhcp-packet.offer {
+    background-color: #28a745;
+    color: white;
+}
+
+.dhcp-packet.request {
+    background-color: #fd7e14;
+    color: white;
+}
+
+.dhcp-packet.ack {
+    background-color: #20c997;
+    color: white;
+}
+
+.dhcp-packet.rogue {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Animation Styles */
+@keyframes moveRight {
+    0% { left: 0%; opacity: 1; }
+    100% { left: 100%; opacity: 1; }
+}
+
+@keyframes moveLeft {
+    0% { right: 0%; opacity: 1; }
+    100% { right: 100%; opacity: 1; }
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.highlight {
+    animation: blink 1s infinite;
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.8);
+}
+
+/* DHCP Message Display */
+#dhcpDiscoverCard, #dhcpOfferCard, #dhcpRequestCard, #dhcpAckCard {
+    transition: all 0.5s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+#dhcpDiscoverContent, #dhcpOfferContent, #dhcpRequestContent, #dhcpAckContent {
+    font-family: monospace;
+    font-size: 0.9rem;
+    white-space: pre-wrap;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+/* Card header styles */
+#dhcpDiscoverCard .card-header {
+    background-color: #007bff;
+}
+
+#dhcpOfferCard .card-header {
+    background-color: #28a745;
+}
+
+#dhcpRequestCard .card-header {
+    background-color: #fd7e14;
+}
+
+#dhcpAckCard .card-header {
+    background-color: #17a2b8;
+}
+
+/* Table Styles */
+.table-responsive {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.expired {
+    color: #dc3545;
+}
+
+.active {
+    color: #28a745;
+}
+
+.compromised {
+    background-color: #fff2f0 !important;
+}
+
+/* Static entry styles */
+button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Add a tooltip to explain why buttons are disabled */
+.btn-group {
+    position: relative;
+}
+
+/* Animated connection line for authentic DHCP simulation */
+.connection-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    margin: 0 10px;
+}
+
+#networkConnection {
+    height: 5px;
+    width: 100%;
+    background: repeating-linear-gradient(
+        to right,
+        #007bff 0px,
+        #007bff 10px,
+        #28a745 10px,
+        #28a745 20px
+    );
+    background-size: 40px 5px;
+    animation: moveConnectionLine 1s linear infinite;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    border-radius: 5px;
+}
+
+.connection-label {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+@keyframes moveConnectionLine {
+    from { background-position: 0 0; }
+    to { background-position: 40px 0; }
+}
+
+button[disabled].release-btn:hover::after,
+button[disabled].renew-btn:hover::after {
+    content: 'Not applicable for static entries';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 100;
+    margin-bottom: 5px;
+}
+
+/* Countdown Timer */
+.countdown {
+    font-weight: bold;
+    color: #0d6efd;
+}
+
+/* Attack Simulation Styles */
+.attack-simulation-container {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Horizontal layout for rogue DHCP simulation */
+.horizontal-network-diagram {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    min-height: 150px;
+}
+
+/* Horizontal connection styles */
+.horizontal-connection {
+    flex-grow: 1;
+    height: 5px;
+    margin: 0 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Connection labels */
+.connection-label {
+    font-size: 0.8rem;
+    margin-top: 10px;
+    white-space: nowrap;
+}
+
+.faster-label {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.slower-label {
+    color: #28a745;
+    font-weight: bold;
+}
+
+#legitimateNetworkConnection {
+    background-color: #b7eb8f;
+    height: 5px;
+    width: 100%;
+}
+
+#rogueNetworkConnection {
+    background-color: #ffccc7;
+    height: 5px;
+    width: 100%;
+}
+
+/* Response time indicators */
+.response-time {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+    z-index: 100;
+    pointer-events: none; /* Prevent blocking clicks */
+}
+
+/* Packet animations for horizontal movement */
+@keyframes moveRightHorizontal {
+    0% { left: 0; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { left: 100%; opacity: 0; }
+}
+
+@keyframes moveLeftHorizontal {
+    0% { right: 0; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { right: 100%; opacity: 0; }
+}
+
+/* Packet styles for rogue simulation */
+.rogue-packet {
+    position: absolute;
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: 0.7rem;
+    z-index: 100;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    top: -20px;
+}
+
+.rogue-packet.discover {
+    background-color: #007bff;
+    color: white;
+}
+
+.rogue-packet.offer {
+    background-color: #28a745;
+    color: white;
+}
+
+.rogue-packet.request {
+    background-color: #fd7e14;
+    color: white;
+}
+
+.rogue-packet.ack {
+    background-color: #20c997;
+    color: white;
+}
+
+.rogue-packet.malicious {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Traffic flow indicator for horizontal connections */
+.horizontal-traffic {
+    position: absolute;
+    height: 5px;
+    background-color: rgba(0, 123, 255, 0.5);
+    top: 0;
+    z-index: 5;
+    animation: pulseTraffic 1s infinite;
+}
+
+@keyframes pulseTraffic {
+    0% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+    100% { opacity: 0.3; }
+}
+
+/* Enhanced packet animations */
+.dhcp-packet {
+    position: absolute;
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: 0.7rem;
+    z-index: 100;
+    opacity: 0;
+    white-space: nowrap;
+    transition: all 0.5s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Packet animations for authentic simulation */
+@keyframes moveRight {
+    0% { left: 0; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { left: 100%; opacity: 0; }
+}
+
+@keyframes moveLeft {
+    0% { right: 0; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { right: 100%; opacity: 0; }
+}
+
+.dhcp-packet.discover {
+    background-color: #007bff;
+    color: white;
+}
+
+.dhcp-packet.offer {
+    background-color: #28a745;
+    color: white;
+}
+
+.dhcp-packet.request {
+    background-color: #fd7e14;
+    color: white;
+}
+
+.dhcp-packet.ack {
+    background-color: #20c997;
+    color: white;
+}
+
+.dhcp-packet.rogue {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Traffic flow animation */
+@keyframes trafficFlow {
+    0% { opacity: 0; height: 0; }
+    20% { opacity: 1; height: 20%; }
+    80% { opacity: 1; height: 80%; }
+    100% { opacity: 0; height: 100%; }
+}
+
+.traffic-indicator {
+    position: absolute;
+    width: 100%;
+    background-color: rgba(220, 53, 69, 0.5);
+    animation: trafficFlow 2s infinite;
+    z-index: 5;
+    left: 0;
+    bottom: 0;
+}
+
+/* Device highlight animations */
+@keyframes devicePulse {
+    0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+}
+
+.compromised {
+    animation: devicePulse 1.5s infinite;
+}
+
+/* Pulse animation for devices */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.pulse-animation {
+    animation: pulse 1s infinite;
+}
+
+/* Packet receipt animation */
+.packet-receipt {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    animation: receivePacket 1.5s ease-out;
+    z-index: 100;
+}
+
+@keyframes receivePacket {
+    0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+}
+
+/* Internet traffic animation */
+.internet-active {
+    position: relative;
+}
+
+.internet-active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(220, 53, 69, 0.2);
+    animation: internetPulse 2s infinite;
+}
+
+@keyframes internetPulse {
+    0% { transform: scale(0.95); opacity: 0.7; }
+    50% { transform: scale(1.05); opacity: 0.3; }
+    100% { transform: scale(0.95); opacity: 0.7; }
+}
+
+/* Toggle Switch Styles */
+.form-check-input:checked {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+#rogueServerToggle:checked {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .network-diagram {
+        flex-direction: column;
+    }
+
+    .network-connection {
+        width: 5px;
+        height: 50px;
+        margin: 10px 0;
+    }
+
+    .network-device {
+        width: 120px;
+        margin-bottom: 10px;
+    }
+}

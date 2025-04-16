@@ -1,0 +1,123 @@
+/* Main Styles */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+/* Map Styles */
+#map {
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.map-marker {
+    text-align: center;
+}
+
+.map-marker-icon {
+    font-size: 24px;
+}
+
+.map-marker-label {
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* Hop Styles */
+.hop-marker {
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    border: 2px solid #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.hop-marker.source {
+    background-color: #28a745;
+    width: 16px;
+    height: 16px;
+}
+
+.hop-marker.destination {
+    background-color: #dc3545;
+    width: 16px;
+    height: 16px;
+}
+
+.hop-marker.low-latency {
+    background-color: #28a745;
+}
+
+.hop-marker.medium-latency {
+    background-color: #ffc107;
+}
+
+.hop-marker.high-latency {
+    background-color: #dc3545;
+}
+
+.hop-marker.timeout {
+    background-color: #6c757d;
+}
+
+/* Hop Path Line */
+.hop-path {
+    stroke-width: 3;
+    stroke: #007bff;
+    opacity: 0.7;
+    stroke-dasharray: 5, 5;
+}
+
+/* Animation */
+.packet {
+    fill: #007bff;
+    stroke: #fff;
+    stroke-width: 1;
+}
+
+/* Latency Indicators */
+.latency-badge {
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.latency-low {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.latency-medium {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.latency-high {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.latency-timeout {
+    background-color: #e2e3e5;
+    color: #383d41;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #map {
+        height: 350px !important;
+    }
+    
+    .card-title {
+        font-size: 1rem;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+}

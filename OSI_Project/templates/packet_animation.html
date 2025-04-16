@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCP/IP Layer Packet Animation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style1.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>TCP/IP Layer Packet Animation</h1>
+
+        <!-- Educational Content First -->
+        <div class="educational-content">
+            <h2>Understanding TCP/IP Layers</h2>
+
+            <div class="edu-section">
+                <h3>The TCP/IP Model</h3>
+                <p>The TCP/IP model is a framework for understanding how data travels across a network. It consists of four main layers:</p>
+
+                <div class="layer-explanation">
+                    <div class="layer-box application">
+                        <h4>Application Layer</h4>
+                        <p>Protocols: HTTP, FTP, SMTP, DNS</p>
+                        <p>Function: Provides network services directly to end-users</p>
+                    </div>
+
+                    <div class="layer-box transport">
+                        <h4>Transport Layer</h4>
+                        <p>Protocols: TCP (reliable), UDP (fast)</p>
+                        <p>Function: End-to-end communication, segmentation, flow control</p>
+                    </div>
+
+                    <div class="layer-box network">
+                        <h4>Network Layer</h4>
+                        <p>Protocols: IP, ICMP, ARP</p>
+                        <p>Function: Routing between networks, logical addressing (IP)</p>
+                    </div>
+
+                    <div class="layer-box datalink">
+                        <h4>Data Link Layer</h4>
+                        <p>Protocols: Ethernet, Wi-Fi</p>
+                        <p>Function: Physical addressing (MAC), media access control</p>
+                    </div>
+
+                    <div class="layer-box physical">
+                        <h4>Physical Layer</h4>
+                        <p>Protocols: Ethernet, USB, Bluetooth physical specs</p>
+                        <p>Function: Transmission of raw bits over physical medium (cables, wireless)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visualization Section -->
+        <div class="visualization-section">
+            <h2>Packet Transmission Visualization</h2>
+            <p class="description">Watch how data moves through TCP/IP layers with encapsulation and decapsulation.</p>
+
+            <div class="controls">
+                <button id="startAnimation">Start Animation</button>
+            </div>
+
+            <div class="network-diagram">
+                <div class="computer sender">
+                    <h3>Sender</h3>
+                    <div class="layers">
+                        <div class="layer application" data-layer="Application">Application</div>
+                        <div class="layer transport" data-layer="Transport">Transport</div>
+                        <div class="layer network" data-layer="Network">Network</div>
+                        <div class="layer datalink" data-layer="Data Link">Data Link</div>
+                        <div class="layer physical" data-layer="Physical">Physical</div>
+                    </div>
+                    <div class="computer-image">
+                        <img src="{{ url_for('static', filename='images/computer.svg') }}" alt="Computer">
+                    </div>
+                </div>
+
+                <div class="transmission-medium">
+                    <div class="physical-line"></div>
+                </div>
+
+                <div class="computer receiver">
+                    <h3>Receiver</h3>
+                    <div class="layers">
+                        <div class="layer application" data-layer="Application">Application</div>
+                        <div class="layer transport" data-layer="Transport">Transport</div>
+                        <div class="layer network" data-layer="Network">Network</div>
+                        <div class="layer datalink" data-layer="Data Link">Data Link</div>
+                        <div class="layer physical" data-layer="Physical">Physical</div>
+                    </div>
+                    <div class="computer-image">
+                        <img src="{{ url_for('static', filename='images/computer.svg') }}" alt="Computer">
+                    </div>
+                </div>
+            </div>
+
+            <div class="packet-container">
+                <div id="packet" class="packet">
+                    <div class="packet-content">Data</div>
+                </div>
+            </div>
+
+            <div class="explanation-panel">
+                <h3>Process Explanation</h3>
+                <div id="explanation-text">
+                    Click "Start Animation" to begin the visualization.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/animation.js') }}"></script>
+</body>
+</html>
