@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARP Protocol Explorer: Learn, Simulate & Visualize</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='arp/css/style.css') }}">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">ARP Protocol Explorer: Learn, Simulate & Visualize</h1>
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="simulation-tab" data-bs-toggle="tab" data-bs-target="#simulation" type="button" role="tab" aria-controls="simulation" aria-selected="false">ARP Simulation</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="mitm-tab" data-bs-toggle="tab" data-bs-target="#mitm" type="button" role="tab" aria-controls="mitm" aria-selected="false">MAC Spoofing</button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+            <!-- Home Tab with ARP Theory -->
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="card mt-3">
+                    <div class="card-header bg-primary text-white">
+                        <h4>Address Resolution Protocol (ARP)</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <h5>What is ARP?</h5>
+                                <p>
+                                    The <strong>Address Resolution Protocol (ARP)</strong> is a communication protocol used for discovering the link layer address, such as a MAC address, associated with a given internet layer address, typically an IPv4 address. This mapping is a critical function in the Internet protocol suite.
+                                </p>
+
+                                <div class="alert alert-info">
+                                    <strong>Key Point:</strong> ARP translates IP addresses (logical addresses) to MAC addresses (physical addresses) on local networks.
+                                </div>
+
+                                <h5 class="mt-4">Why is ARP Needed?</h5>
+                                <p>
+                                    In a local area network (LAN), devices communicate using MAC addresses, not IP addresses. When a device wants to communicate with another device on the same network:
+                                </p>
+                                <ol>
+                                    <li>It knows the destination's IP address (e.g., 192.168.1.5)</li>
+                                    <li>But it needs the destination's MAC address to create an Ethernet frame</li>
+                                    <li>ARP provides the mechanism to discover this MAC address</li>
+                                </ol>
+
+                                <h5 class="mt-4">How ARP Works</h5>
+                                <p>The ARP process follows these steps:</p>
+
+                                <div class="card mb-3">
+                                    <div class="card-body bg-light">
+                                        <ol>
+                                            <li><strong>Check ARP Cache:</strong> The device first checks its ARP cache to see if it already knows the MAC address for the target IP.</li>
+                                            <li><strong>ARP Request:</strong> If the MAC address isn't in the cache, the device broadcasts an ARP request packet to all devices on the local network asking, "Who has IP address 192.168.1.5?"</li>
+                                            <li><strong>ARP Reply:</strong> The device with that IP address responds with an ARP reply containing its MAC address.</li>
+                                            <li><strong>Update ARP Cache:</strong> The requesting device adds this IP-to-MAC mapping to its ARP cache for future use.</li>
+                                            <li><strong>Communication:</strong> Now the device can create Ethernet frames with the correct destination MAC address.</li>
+                                        </ol>
+                                    </div>
+                                </div>
+
+                                <h5 class="mt-4">ARP Packet Structure</h5>
+                                <p>An ARP packet contains several fields:</p>
+                                <ul>
+                                    <li><strong>Hardware Type:</strong> Specifies the network link protocol type (1 for Ethernet)</li>
+                                    <li><strong>Protocol Type:</strong> Specifies the internetwork protocol (0x0800 for IPv4)</li>
+                                    <li><strong>Hardware Address Length:</strong> Length of hardware addresses (6 bytes for MAC)</li>
+                                    <li><strong>Protocol Address Length:</strong> Length of protocol addresses (4 bytes for IPv4)</li>
+                                    <li><strong>Operation:</strong> Specifies the operation (1 for request, 2 for reply)</li>
+                                    <li><strong>Sender Hardware Address:</strong> MAC address of the sender</li>
+                                    <li><strong>Sender Protocol Address:</strong> IP address of the sender</li>
+                                    <li><strong>Target Hardware Address:</strong> MAC address of the target (all zeros in a request)</li>
+                                    <li><strong>Target Protocol Address:</strong> IP address of the target</li>
+                                </ul>
+
+                                <h5 class="mt-4">ARP Cache</h5>
+                                <p>
+                                    To improve efficiency, devices maintain an ARP cache (or ARP table) that stores recently resolved IP-to-MAC mappings. This reduces network traffic by avoiding repeated ARP requests for the same IP addresses.
+                                </p>
+                                <p>
+                                    ARP cache entries can be:
+                                </p>
+                                <ul>
+                                    <li><strong>Dynamic:</strong> Created automatically through the ARP process and expire after a timeout</li>
+                                    <li><strong>Static:</strong> Manually configured and don't expire</li>
+                                </ul>
+
+                                <h5 class="mt-4">ARP Security Concerns</h5>
+                                <p>
+                                    ARP has no authentication mechanism, making it vulnerable to attacks such as:
+                                </p>
+                                <ul>
+                                    <li><strong>ARP Spoofing/Poisoning:</strong> An attacker sends fake ARP messages to associate their MAC address with another device's IP address</li>
+                                    <li><strong>Man-in-the-Middle Attacks:</strong> Using ARP spoofing to intercept traffic between two devices</li>
+                                    <li><strong>Denial of Service:</strong> Flooding a network with fake ARP packets</li>
+                                </ul>
+
+                                <div class="alert alert-warning">
+                                    <strong>Security Note:</strong> The lack of authentication in ARP is a fundamental security weakness in local networks.
+                                </div>
+
+                                <h5 class="mt-4">ARP in Different Network Scenarios</h5>
+
+                                <h6>Same Subnet Communication</h6>
+                                <p>
+                                    When communicating with a device on the same subnet, ARP directly resolves the destination IP to its MAC address.
+                                </p>
+
+                                <h6>Different Subnet Communication</h6>
+                                <p>
+                                    When communicating with a device on a different subnet, ARP resolves the MAC address of the default gateway (router), not the final destination.
+                                </p>
+
+                                <h5 class="mt-4">Related Protocols</h5>
+                                <ul>
+                                    <li><strong>Reverse ARP (RARP):</strong> Obsolete protocol that allowed a device to request its own IP address based on its MAC address</li>
+                                    <li><strong>Neighbor Discovery Protocol (NDP):</strong> The IPv6 equivalent of ARP</li>
+                                    <li><strong>Proxy ARP:</strong> Allows a router to answer ARP requests on behalf of devices in other networks</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ARP Request-Response Simulation Tab -->
+            <div class="tab-pane fade" id="simulation" role="tabpanel" aria-labelledby="simulation-tab">
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5>Dynamic ARP Request-Response Simulation</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="ipAddress">Enter IP Address:</label>
+                                    <input type="text" class="form-control" id="ipAddress" placeholder="e.g., 192.168.1.1">
+                                </div>
+                                <div id="queryBtnContainer">
+                                    <button class="btn btn-primary mt-2" id="sendArpRequest">Send ARP Request</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">Result</div>
+                                    <div class="card-body" id="arpResult">
+                                        <p class="text-muted">Enter an IP address and click "Send ARP Request" to see the result.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">Animation</div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="card mb-3" id="arpRequestCard" style="display: none;">
+                                                    <div class="card-header bg-primary text-white">ARP Request Packet</div>
+                                                    <div class="card-body">
+                                                        <pre id="arpRequestContent" class="mb-0"></pre>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div id="animationContainer" class="d-flex justify-content-between align-items-center">
+                                                    <div class="device" id="sourceDevice">
+                                                        <div class="device-icon">💻</div>
+                                                        <div class="device-label">Your Computer</div>
+                                                    </div>
+                                                    <div class="network-line">
+                                                        <div id="arpPacket" class="packet">ARP</div>
+                                                    </div>
+                                                    <div class="device" id="targetDevice">
+                                                        <div class="device-icon">🖥️</div>
+                                                        <div class="device-label">Target Device</div>
+                                                        <div class="device-ip" id="targetIp"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card mb-3" id="arpReplyCard" style="display: none;">
+                                                    <div class="card-header bg-success text-white">ARP Reply Packet</div>
+                                                    <div class="card-body">
+                                                        <pre id="arpReplyContent" class="mb-0"></pre>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ARP Cache Table (moved from separate tab) -->
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5>ARP Cache Table Visualization</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <button class="btn btn-primary" id="refreshArpCache">Refresh ARP Cache</button>
+                            <button class="btn btn-success" id="addArpEntry">Add New Entry</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>IP Address</th>
+                                        <th>MAC Address</th>
+                                        <th>Interface</th>
+                                        <th>Type</th>
+                                        <th>Resolution</th>
+                                        <th>Timestamp</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="arpCacheTable">
+                                    <!-- ARP cache entries will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Add/Edit ARP Entry Modal -->
+                        <div class="modal fade" id="arpEntryModal" tabindex="-1" aria-labelledby="arpEntryModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="arpEntryModalLabel">Add/Edit ARP Entry</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="arpEntryForm">
+                                            <div class="mb-3">
+                                                <label for="entryIp" class="form-label">IP Address</label>
+                                                <input type="text" class="form-control" id="entryIp" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="entryMac" class="form-label">MAC Address</label>
+                                                <input type="text" class="form-control" id="entryMac" required>
+                                                <small class="form-text text-muted">Format: XX:XX:XX:XX:XX:XX</small>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="entryType" class="form-label">Entry Type</label>
+                                                <select class="form-select" id="entryType">
+                                                    <option value="dynamic">Dynamic</option>
+                                                    <option value="static">Static</option>
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-primary" id="saveArpEntry">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <!-- MAC Spoofing Tab -->
+            <div class="tab-pane fade" id="mitm" role="tabpanel" aria-labelledby="mitm-tab">
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5>MAC Spoofing Demonstration</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-warning">
+                            <strong>Educational Purpose Only:</strong> This demonstration is for educational purposes to understand how ARP poisoning works in MITM attacks.
+                        </div>
+
+                        <!-- Animation Controls -->
+                        <div class="animation-controls">
+                            <button class="btn btn-primary" id="startAnimation">Start Animation</button>
+                            <button class="btn btn-secondary" id="resetAnimation" disabled>Reset Animation</button>
+                        </div>
+
+                        <!-- Section 1: Initial Network State -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-info text-white">1. Initial Network State</div>
+                            <div class="card-body">
+                                <div class="network-diagram d-flex justify-content-between align-items-center" id="initialNetworkState">
+                                    <!-- Victim Device -->
+                                    <div class="network-device victim" id="initialVictim">
+                                        <div class="device-icon">💻</div>
+                                        <div>Victim</div>
+                                        <div class="device-info">IP: 192.168.1.5</div>
+                                        <div class="device-info">MAC: AA:BB:CC:11:22:33</div>
+                                    </div>
+
+                                    <!-- Connection with ARP packets -->
+                                    <div class="network-connection" style="position: relative;">
+                                        <!-- ARP Request Packet -->
+                                        <div class="arp-packet request" id="initialArpRequest" style="opacity: 0;">
+                                            ARP Request: Who has 192.168.1.1?
+                                        </div>
+                                        <!-- ARP Reply Packet -->
+                                        <div class="arp-packet reply" id="initialArpReply" style="opacity: 0;">
+                                            ARP Reply: 192.168.1.1 is at 00:1A:2B:3C:4D:5E
+                                        </div>
+                                    </div>
+
+                                    <!-- Gateway Device -->
+                                    <div class="network-device gateway" id="initialGateway">
+                                        <div class="device-icon">🌐</div>
+                                        <div>Gateway</div>
+                                        <div class="device-info">IP: 192.168.1.1</div>
+                                        <div class="device-info">MAC: 00:1A:2B:3C:4D:5E</div>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <p>In the initial state, the victim and gateway exist on the network but have not yet communicated. The victim doesn't know the gateway's MAC address.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 2: Normal Communication -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-success text-white">2. Normal Communication</div>
+                            <div class="card-body">
+                                <div class="network-diagram d-flex justify-content-between align-items-center" id="normalCommunication">
+                                    <!-- Victim Device -->
+                                    <div class="network-device victim" id="normalVictim">
+                                        <div class="device-icon">💻</div>
+                                        <div>Victim</div>
+                                        <div class="device-info">IP: 192.168.1.5</div>
+                                        <div class="device-info">MAC: AA:BB:CC:11:22:33</div>
+                                        <div class="device-info">ARP Table:</div>
+                                        <div class="device-info" id="normalVictimArpEntry"></div>
+                                    </div>
+
+                                    <!-- Connection with ARP packets -->
+                                    <div class="network-connection" style="position: relative;">
+                                        <!-- ARP Request Packet -->
+                                        <div class="arp-packet request" id="normalArpRequest" style="opacity: 0;">
+                                            ARP Request: Who has 192.168.1.1?
+                                        </div>
+                                        <!-- ARP Reply Packet -->
+                                        <div class="arp-packet reply" id="normalArpReply" style="opacity: 0;">
+                                            ARP Reply: 192.168.1.1 is at 00:1A:2B:3C:4D:5E
+                                        </div>
+                                        <!-- Data Packet -->
+                                        <div class="arp-packet" id="normalDataPacket" style="background-color: #6c757d; opacity: 0;">
+                                            Data Packet
+                                        </div>
+                                    </div>
+
+                                    <!-- Gateway Device -->
+                                    <div class="network-device gateway" id="normalGateway">
+                                        <div class="device-icon">🌐</div>
+                                        <div>Gateway</div>
+                                        <div class="device-info">IP: 192.168.1.1</div>
+                                        <div class="device-info">MAC: 00:1A:2B:3C:4D:5E</div>
+                                        <div class="device-info">ARP Table:</div>
+                                        <div class="device-info" id="normalGatewayArpEntry"></div>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <p>In normal communication, the victim sends an ARP request to find the gateway's MAC address. The gateway responds with its real MAC address. The victim can then send data directly to the gateway.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 3: ARP Poisoning Attack -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-danger text-white">3. ARP Poisoning Attack</div>
+                            <div class="card-body">
+                                <div class="network-diagram" id="attackScenario" style="position: relative; height: 300px;">
+                                    <!-- Victim Device -->
+                                    <div class="network-device victim" id="attackVictim" style="position: absolute; top: 20px; left: 20px;">
+                                        <div class="device-icon">💻</div>
+                                        <div>Victim</div>
+                                        <div class="device-info">IP: 192.168.1.5</div>
+                                        <div class="device-info">MAC: AA:BB:CC:11:22:33</div>
+                                        <div class="device-info">ARP Table:</div>
+                                        <div class="device-info poisoned-entry" id="attackVictimArpEntry"></div>
+                                    </div>
+
+                                    <!-- Gateway Device -->
+                                    <div class="network-device gateway" id="attackGateway" style="position: absolute; top: 20px; right: 20px;">
+                                        <div class="device-icon">🌐</div>
+                                        <div>Gateway</div>
+                                        <div class="device-info">IP: 192.168.1.1</div>
+                                        <div class="device-info">MAC: 00:1A:2B:3C:4D:5E</div>
+                                        <div class="device-info">ARP Table:</div>
+                                        <div class="device-info poisoned-entry" id="attackGatewayArpEntry"></div>
+                                    </div>
+
+                                    <!-- Attacker Device (initially hidden) -->
+                                    <div class="network-device attacker" id="attacker" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); opacity: 0;">
+                                        <div class="device-icon">💀</div>
+                                        <div>Attacker</div>
+                                        <div class="device-info">MAC: EE:FF:00:11:22:33</div>
+                                    </div>
+
+                                    <!-- T-shaped Connection with Cross -->
+                                    <!-- Horizontal line from victim to gateway -->
+                                    <div id="victimToGatewayLine" style="position: absolute; top: 60px; left: 140px; right: 140px; height: 3px; background-color: #6c757d;"></div>
+
+                                    <!-- Vertical line from intersection to attacker -->
+                                    <div id="intersectionToAttackerLine" style="position: absolute; top: 60px; left: 50%; width: 3px; height: 140px; background-color: transparent;"></div>
+
+                                    <!-- Red X at intersection -->
+                                    <div id="communicationBlocker" style="position: absolute; top: 50px; left: 50%; transform: translateX(-50%); background-color: white; border: 2px solid #dc3545; border-radius: 50%; width: 24px; height: 24px; display: flex; justify-content: center; align-items: center; opacity: 0;">
+                                        <span style="color: #dc3545; font-weight: bold; font-size: 16px;">✕</span>
+                                    </div>
+
+                                    <!-- Packets for animation -->
+                                    <!-- Victim's ARP request -->
+                                    <div class="arp-packet request" id="attackArpRequest" style="position: absolute; top: 45px; left: 140px; opacity: 0;">
+                                        ARP Request: Who has 192.168.1.1?
+                                    </div>
+
+                                    <!-- Victim's ARP request diverted to attacker -->
+                                    <div class="arp-packet request" id="divertedArpRequest" style="position: absolute; top: 70px; left: 50%; transform: translateX(-50%); opacity: 0; z-index: 10;">
+                                        ARP Request: Who has 192.168.1.1?
+                                    </div>
+
+                                    <!-- Attacker's spoofed ARP request to gateway -->
+                                    <div class="arp-packet request spoofed" id="attackerArpRequest" style="position: absolute; top: 200px; left: 50%; transform: translateX(-50%); opacity: 0; z-index: 10;">
+                                        Spoofed Request: Who has 192.168.1.1?
+                                    </div>
+
+                                    <!-- Gateway's ARP reply to attacker -->
+                                    <div class="arp-packet reply" id="gatewayArpReply" style="position: absolute; top: 45px; right: 140px; opacity: 0; z-index: 10;">
+                                        ARP Reply: 192.168.1.1 is at 00:1A:2B:3C:4D:5E
+                                    </div>
+
+                                    <!-- Gateway's ARP reply to attacker -->
+                                    <div class="arp-packet reply" id="divertedgatewayArpReply" style="position: absolute; top: 70px; left: 50%; transform: translateX(-50%); opacity: 0; z-index: 10;">
+                                        ARP Reply: 192.168.1.1 is at 00:1A:2B:3C:4D:5E
+                                    </div>
+
+                                    <!-- Attacker's spoofed ARP reply to victim -->
+                                    <div class="arp-packet reply spoofed" id="spoofedArpReply" style="position: absolute; top: 200px; left: 50%; transform: translateX(-50%); opacity: 0; z-index: 10;">
+                                        Spoofed Reply: 192.168.1.1 is at EE:FF:00:11:22:33
+                                    </div>
+
+                                    <!-- Victim's data packet -->
+                                    <div class="arp-packet" id="victimDataPacket" style="background-color: #6c757d; position: absolute; top: 45px; left: 140px; opacity: 0; z-index: 10;">
+                                        Data for Gateway
+                                    </div>
+
+                                    <!-- Victim's data packet diverted to attacker -->
+                                    <div class="arp-packet" id="divertedDataPacket" style="background-color: #6c757d; position: absolute; top: 70px; left: 50%; transform: translateX(-50%); opacity: 0; z-index: 10;">
+                                        Data for Gateway
+                                    </div>
+
+                                    <!-- Attacker's modified data packet -->
+                                    <div class="arp-packet spoofed" id="modifiedDataPacket" style="background-color: #dc3545; position: absolute; top: 200px; left: 50%; transform: translateX(-50%); opacity: 0; z-index: 10;">
+                                        Modified/Malicious Data
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <p>In an ARP poisoning attack:</p>
+                                    <ol>
+                                        <li>The victim sends an ARP request to find the gateway.</li>
+                                        <li>The attacker intercepts this request and appears in the middle.</li>
+                                        <li>The attacker sends its own request to the gateway to learn its MAC address.</li>
+                                        <li>The attacker sends a spoofed ARP reply to the victim, claiming to be the gateway.</li>
+                                        <li>The victim updates its ARP table with the attacker's MAC address.</li>
+                                        <li>When the victim sends data to what it thinks is the gateway, the attacker intercepts it.</li>
+                                        <li>The attacker can modify the data before forwarding it to the real gateway.</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Prevention Information -->
+                        <div class="card mt-3">
+                            <div class="card-header">Prevention Measures</div>
+                            <div class="card-body">
+                                <div class="alert alert-info">
+                                    <strong>Prevention:</strong> Use static ARP entries, ARP spoofing detection tools, or encrypted communications (HTTPS, VPN) to protect against such attacks.
+                                </div>
+                                <ul>
+                                    <li><strong>Static ARP Entries:</strong> Configure devices with permanent MAC-to-IP mappings that cannot be overwritten.</li>
+                                    <li><strong>ARP Spoofing Detection:</strong> Use tools that monitor for suspicious ARP activity on the network.</li>
+                                    <li><strong>Encryption:</strong> Even if traffic is intercepted, encrypted data remains protected from viewing or modification.</li>
+                                    <li><strong>Network Segmentation:</strong> Limit the scope of potential ARP poisoning attacks by segmenting networks.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='arp/js/main.js') }}"></script>
+</body>
+</html>

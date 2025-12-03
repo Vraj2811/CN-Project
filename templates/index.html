@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CN Project Hub</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #2c3e50;
+            width: 100%;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: #ecf0f1;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 3rem;
+            width: 80%;
+            max-width: 1200px;
+        }
+        .card {
+            background-color: #2c3e50;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            background-color: #34495e;
+        }
+        .card h2 {
+            margin-top: 0;
+            color: #3498db;
+        }
+        .card p {
+            color: #bdc3c7;
+        }
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        footer {
+            margin-top: auto;
+            padding: 1rem;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Computer Networks Project Hub</h1>
+        <p>Explore various networking concepts and tools</p>
+    </header>
+
+    <div class="container">
+        <a href="/arp/" class="card">
+            <div class="icon">🔌</div>
+            <h2>ARP Project</h2>
+            <p>Visualize Address Resolution Protocol (ARP) operations and cache management.</p>
+        </a>
+        <a href="/dhcp/" class="card">
+            <div class="icon">📡</div>
+            <h2>DHCP Project</h2>
+            <p>Simulate DHCP server operations, lease management, and rogue server attacks.</p>
+        </a>
+        <a href="/dns/" class="card">
+            <div class="icon">🌐</div>
+            <h2>DNS Resolver</h2>
+            <p>Demonstrate DNS resolution process and record types.</p>
+        </a>
+        <a href="/osi/" class="card">
+            <div class="icon">📚</div>
+            <h2>OSI Model</h2>
+            <p>Interactive guide to OSI and TCP/IP models with packet visualization.</p>
+        </a>
+        <a href="/packet/" class="card">
+            <div class="icon">📦</div>
+            <h2>Packet Analyzer</h2>
+            <p>Analyze PCAP files and inspect packet details.</p>
+        </a>
+        <a href="/traceroot/" class="card">
+            <div class="icon">🗺️</div>
+            <h2>Traceroute</h2>
+            <p>Trace the path of packets to a destination using different protocols.</p>
+        </a>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 CN Project Team</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,6 @@
+flask
+scapy
+dnspython
+flask_cors
+requests
+python-dotenv

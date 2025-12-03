@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNS Query Simulation - DNS Resolution Demonstrator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dns/css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dns/css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dns/css/simulation.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dns/css/dns-visualization.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dns/css/map-visualization.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dns/css/dns-simulation.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Interactive DNS Query Simulation</h1>
+            <p>Visualize how DNS queries traverse the DNS hierarchy</p>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/dns/">Home</a></li>
+                    <li><a href="/dns/simulation" class="active">DNS Query Simulation</a></li>
+                    <li><a href="/dns/realtime">Real-time Lookup</a></li>
+                    <li><a href="/dns/cache">Cache Simulation</a></li>
+                    <li><a href="/dns/poisoning">DNS Poisoning Demo</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section class="simulation-controls">
+                <h2>DNS Query Simulation</h2>
+                <div class="control-panel">
+                    <div class="form-group">
+                        <label for="sim-domain">Domain Name:</label>
+                        <input type="text" id="sim-domain" placeholder="example.com" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="sim-record-type">Record Type:</label>
+                            <select id="sim-record-type">
+                                <option value="A">A (IPv4 Address)</option>
+                                <option value="AAAA">AAAA (IPv6 Address)</option>
+                                <option value="CNAME">CNAME (Canonical Name)</option>
+                                <option value="MX">MX (Mail Exchange)</option>
+                                <option value="NS">NS (Name Server)</option>
+                                <option value="TXT">TXT (Text)</option>
+                                <option value="SOA">SOA (Start of Authority)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sim-query-mode">Query Mode:</label>
+                            <select id="sim-query-mode">
+                                <option value="recursive">Recursive</option>
+                                <option value="iterative">Iterative</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="sim-use-cache" checked>
+                            <label for="sim-use-cache">Use DNS Cache</label>
+                        </div>
+                    </div>
+
+                    <button id="start-simulation" class="btn-submit">Start Simulation</button>
+                </div>
+            </section>
+
+            <section class="simulation-view">
+                <div class="simulation-container">
+                    <!-- Interactive DNS Query Simulation -->
+                    <div id="dns-simulation-container" class="dns-simulation-container">
+                        <!-- DNS packet simulation will be rendered here by JavaScript -->
+                    </div>
+
+                    <!-- World Map Visualization -->
+                    <div class="world-map-container">
+                        <div class="world-map-header">
+                            <div class="world-map-title">DNS Resolution on World Map</div>
+                            <div class="world-map-legend">
+                                <div class="legend-item">
+                                    <div class="legend-color legend-client"></div>
+                                    <span>Client</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color legend-resolver"></div>
+                                    <span>Resolver</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color legend-root"></div>
+                                    <span>Root Servers</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color legend-tld"></div>
+                                    <span>TLD Servers</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color legend-auth"></div>
+                                    <span>Auth Servers</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="dns-world-map">
+                            <!-- World map will be rendered here by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Terminal Display -->
+                    <div class="terminal-container">
+                        <div class="terminal-display">
+                            <div class="terminal-header">
+                                <div class="terminal-title">DNS Command Terminal</div>
+                                <div class="terminal-controls">
+                                    <span class="terminal-btn"></span>
+                                    <span class="terminal-btn"></span>
+                                    <span class="terminal-btn"></span>
+                                </div>
+                            </div>
+                            <div class="terminal-content">
+                                <div class="terminal-prompt" id="terminal-prompt">
+                                    $ dig example.com A
+                                </div>
+                                <div class="terminal-output" id="terminal-output">
+                                    Ready to execute DNS query...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="simulation-info">
+                        <div class="info-panel">
+                            <h3>Simulation Status</h3>
+                            <div id="simulation-status">Ready to start simulation</div>
+                            <div id="simulation-step"></div>
+                            <div id="simulation-details"></div>
+                        </div>
+
+                        <div class="query-log">
+                            <h3>Query Log</h3>
+                            <div id="query-log-content"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="simulation-explanation">
+                <h2>Understanding DNS Query Types</h2>
+                <div class="explanation-grid">
+                    <div class="explanation-card">
+                        <h3>Recursive DNS Query</h3>
+                        <p>In a recursive query, your DNS resolver (usually provided by your ISP) does all the work for you:</p>
+                        <ol>
+                            <li>You ask the resolver for example.com</li>
+                            <li>The resolver queries the root servers</li>
+                            <li>The resolver queries the TLD servers (.com)</li>
+                            <li>The resolver queries the authoritative servers for example.com</li>
+                            <li>The resolver returns the final answer to you</li>
+                        </ol>
+                        <p>This is the most common type of DNS query for end users.</p>
+                    </div>
+
+                    <div class="explanation-card">
+                        <h3>Iterative DNS Query</h3>
+                        <p>In an iterative query, you do most of the work yourself:</p>
+                        <ol>
+                            <li>You ask a root server about example.com</li>
+                            <li>The root server refers you to .com TLD servers</li>
+                            <li>You ask a .com TLD server about example.com</li>
+                            <li>The TLD server refers you to example.com's authoritative servers</li>
+                            <li>You ask an authoritative server for example.com's IP</li>
+                            <li>The authoritative server gives you the final answer</li>
+                        </ol>
+                        <p>This is typically used by DNS resolvers, not end users.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>DNS Resolution Demonstrator - A Flask Application</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='dns/js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='dns/js/simulation.js') }}"></script>
+    <script src="{{ url_for('static', filename='dns/js/dns-map-visualization.js') }}"></script>
+    <script src="{{ url_for('static', filename='dns/js/dns-simulation.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,210 @@
+{% extends 'packet/base.html' %}
+
+{% block title %}Packet Analyzer - Home{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Upload PCAP File</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('packet_upload_file') }}" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="file" class="form-label">Select a PCAP file to upload</label>
+                        <input type="file" class="form-control" id="file" name="file" accept=".pcap,.pcapng">
+                        <div class="form-text">Maximum file size: 16MB</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Available PCAP Files</h5>
+            </div>
+            <div class="card-body">
+                {% if pcap_files %}
+                    <div class="list-group">
+                        {% for file in pcap_files %}
+                            <div class="list-group-item">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">{{ file.filename }}</h5>
+                                    <small class="text-muted">{{ file.type }}</small>
+                                </div>
+                                <p class="mb-1">{{ file.description }}</p>
+                                <div class="d-flex mt-2">
+                                    <a href="{{ url_for('packet_analyze', filename=file.filename) }}" class="btn btn-primary btn-sm me-2">Analyze</a>
+                                    {% if file.type == 'sample' %}
+                                        <a href="{{ url_for('packet_download_sample', filename=file.filename) }}" class="btn btn-outline-secondary btn-sm">Download</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted">No PCAP files available. Upload a file or download a sample.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>About Packet Analyzer</h5>
+            </div>
+            <div class="card-body">
+                <p>This tool allows you to analyze network packet captures (PCAP files) to learn about different network protocols and packet structures.</p>
+
+                <h6>Features:</h6>
+                <ul>
+                    <li>Upload your own PCAP files or use provided samples</li>
+                    <li>View packet details including headers and payloads</li>
+                    <li>Filter packets by protocol, IP address, or port</li>
+                    <li>Search for specific content within packets</li>
+                </ul>
+
+                <h6>Supported Protocols:</h6>
+                <ul>
+                    <li>Ethernet, IP, ARP</li>
+                    <li>TCP, UDP, ICMP</li>
+                    <li>HTTP, HTTPS, DNS</li>
+                    <li>And more...</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Educational Content -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5>Learn About Packet Sniffing</h5>
+            </div>
+            <div class="card-body">
+                <h5>What is Packet Sniffing?</h5>
+                <p>
+                    Packet sniffing is the practice of capturing and analyzing data packets as they travel across a network.
+                    It's a fundamental technique used in network troubleshooting, security analysis, and network protocol research.
+                </p>
+
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-light">
+                                <h6>The OSI Model & Network Packets</h6>
+                            </div>
+                            <div class="card-body">
+                                <p>Network communications follow the OSI (Open Systems Interconnection) model with 7 layers:</p>
+                                <table class="table table-sm table-bordered">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Layer</th>
+                                            <th>Name</th>
+                                            <th>Examples</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>7</td>
+                                            <td>Application</td>
+                                            <td>HTTP, FTP, SMTP, DNS</td>
+                                        </tr>
+                                        <tr>
+                                            <td>6</td>
+                                            <td>Presentation</td>
+                                            <td>SSL/TLS, JPEG, ASCII</td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>Session</td>
+                                            <td>NetBIOS, RPC</td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>Transport</td>
+                                            <td>TCP, UDP</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Network</td>
+                                            <td>IP, ICMP, IPsec</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Data Link</td>
+                                            <td>Ethernet, Wi-Fi, ARP</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Physical</td>
+                                            <td>Cables, Fiber, Radio</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p class="mt-2">When analyzing packets, you'll see these layers encapsulated within each other.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-light">
+                                <h6>Common Network Protocols</h6>
+                            </div>
+                            <div class="card-body">
+                                <dl>
+                                    <dt>TCP (Transmission Control Protocol)</dt>
+                                    <dd>A connection-oriented protocol that ensures reliable data delivery with error checking and flow control. Used by HTTP, HTTPS, FTP, SMTP.</dd>
+
+                                    <dt>UDP (User Datagram Protocol)</dt>
+                                    <dd>A connectionless protocol with minimal overhead. Faster but less reliable than TCP. Used by DNS, streaming media, VoIP.</dd>
+
+                                    <dt>HTTP (Hypertext Transfer Protocol)</dt>
+                                    <dd>The foundation of data communication on the web. Operates on port 80 by default.</dd>
+
+                                    <dt>DNS (Domain Name System)</dt>
+                                    <dd>Translates domain names to IP addresses. Operates primarily on UDP port 53.</dd>
+
+                                    <dt>ICMP (Internet Control Message Protocol)</dt>
+                                    <dd>Used for diagnostic and error reporting. Ping uses ICMP echo requests/replies.</dd>
+
+                                    <dt>ARP (Address Resolution Protocol)</dt>
+                                    <dd>Maps IP addresses to MAC addresses on a local network.</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <h5>Ethical Considerations</h5>
+                        <div class="alert alert-warning">
+                            <p><strong>Important:</strong> Packet sniffing should only be performed:</p>
+                            <ul>
+                                <li>On networks you own or have explicit permission to monitor</li>
+                                <li>For legitimate purposes like troubleshooting or security analysis</li>
+                                <li>In compliance with applicable laws and regulations</li>
+                                <li>With respect for privacy and confidentiality</li>
+                            </ul>
+                            <p>Unauthorized packet sniffing may violate privacy laws and network usage policies.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

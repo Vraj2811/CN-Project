@@ -1,0 +1,239 @@
+{% extends "traceroot/base.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0"><i class="fas fa-info-circle me-2"></i>What is Traceroute?</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5>Understanding Network Paths</h5>
+                        <p>
+                            Traceroute is a network diagnostic tool that shows the path that data packets take from your computer to a destination server.
+                            It maps the journey of packets across an IP network, revealing each hop (router) along the way and measuring the time it takes to reach each hop.
+                        </p>
+                        <h5>Why Use Traceroute?</h5>
+                        <ul>
+                            <li><strong>Network Troubleshooting:</strong> Identify where connection problems or slowdowns occur in a network path</li>
+                            <li><strong>Performance Analysis:</strong> Measure latency between different points in a network</li>
+                            <li><strong>Network Mapping:</strong> Discover the topology of networks and how they interconnect</li>
+                            <li><strong>Security Analysis:</strong> Understand the path your data takes and potential exposure points</li>
+                            <li><strong>Educational Tool:</strong> Learn about internet infrastructure and how data travels globally</li>
+                        </ul>
+                        <h5>How Traceroute Works</h5>
+                        <p>
+                            Traceroute sends packets with incrementally increasing Time-To-Live (TTL) values. When a router receives a packet with an expired TTL,
+                            it returns an ICMP "Time Exceeded" message. By analyzing these responses, traceroute builds a map of the network path.
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title">Traceroute Methods</h5>
+                                <p class="card-text">Traceroute can use different packet types:</p>
+                                <ul>
+                                    <li><strong>UDP:</strong> The traditional method, sends UDP packets to high-numbered ports</li>
+                                    <li><strong>ICMP:</strong> Uses ICMP Echo Request packets (like ping)</li>
+                                    <li><strong>TCP:</strong> Uses TCP SYN packets, often to port 80 (HTTP)</li>
+                                </ul>
+                                <p class="card-text">Each method has advantages in different network environments.</p>
+                                <hr>
+                                <h6>Common Uses:</h6>
+                                <p class="small">
+                                    Network engineers use traceroute to diagnose routing problems, identify bottlenecks, and verify network paths.
+                                    Security professionals use it to understand network exposure and potential attack vectors.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="fas fa-search me-2"></i>Traceroute Analysis</h4>
+            </div>
+            <div class="card-body">
+                <form id="traceroute-form">
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="text" id="destination" class="form-control"
+                                       placeholder="Enter domain or IP (e.g., google.com)" required>
+                                <button class="btn btn-primary" type="submit" id="submit-btn">
+                                    <i class="fas fa-play me-1"></i> Run Traceroute
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <label class="input-group-text" for="traceroute-method">Method:</label>
+                                <select class="form-select" id="traceroute-method">
+                                    <option value="tcp" selected>TCP (Best for firewalls)</option>
+                                    <option value="icmp">ICMP (Standard)</option>
+                                    <option value="udp">UDP (Default)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert alert-secondary">
+                        <small>
+                            <i class="fas fa-info-circle me-1"></i>
+                            <strong>TCP mode</strong> is recommended for tracing through firewalls and corporate networks.
+                            It uses HTTP port 80. Note: If TCP or ICMP mode fails due to privilege issues, the application
+                            will automatically fall back to UDP mode, which doesn't require special privileges.
+                        </small>
+                    </div>
+                </form>
+
+                <div id="loading" class="text-center my-5 d-none">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Running traceroute... This may take a minute.</p>
+                </div>
+
+                <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
+            </div>
+        </div>
+
+        <div id="results-container" class="d-none">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0"><i class="fas fa-map-marked-alt me-2"></i>Traceroute Results</h4>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-light active" id="map-view-btn">
+                            <i class="fas fa-map me-1"></i> Map View
+                        </button>
+                        <button type="button" class="btn btn-light" id="list-view-btn">
+                            <i class="fas fa-list me-1"></i> List View
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="map-view">
+                        <div id="map" style="height: 500px;"></div>
+                    </div>
+
+                    <div id="list-view" class="d-none">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Hop</th>
+                                    <th>IP Address</th>
+                                    <th>Location</th>
+                                    <th>Latency (ms)</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="hop-list">
+                                <!-- Hop data will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0"><i class="fas fa-info-circle me-2"></i>Traceroute Summary</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card text-white bg-primary mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Total Hops</h5>
+                                    <p class="card-text display-4" id="total-hops">0</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-white bg-warning mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Average Latency</h5>
+                                    <p class="card-text display-4" id="avg-latency">0 ms</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-white bg-danger mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Timeouts</h5>
+                                    <p class="card-text display-4" id="timeout-count">0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info mt-3">
+                        <h5><i class="fas fa-lightbulb me-2"></i>About Traceroute Timeouts</h5>
+                        <p>
+                            <strong>Why do I see timeouts when tracing to major websites like Google?</strong>
+                        </p>
+                        <p>
+                            Timeouts in traceroute results are normal and expected, especially when tracing to major websites like Google.
+                            These timeouts occur because:
+                        </p>
+                        <ul>
+                            <li><strong>Security Measures:</strong> Many companies configure their network infrastructure to not respond to traceroute probes.</li>
+                            <li><strong>Firewalls:</strong> Firewalls often block ICMP and UDP packets that traditional traceroute uses.</li>
+                            <li><strong>Load Balancers:</strong> Complex routing systems may hide the actual path that packets take.</li>
+                        </ul>
+                        <p>
+                            <strong>Tip:</strong> Try using the <strong>TCP method</strong> (selected by default) which uses HTTP port 80 for traceroute.
+                            This often works better through firewalls and corporate networks since HTTP traffic is rarely blocked.
+                        </p>
+                        <p>
+                            When you see a Google IP address followed by timeouts, it usually means you've reached Google's network edge,
+                            and the remaining hops are within their internal network which is configured for security.
+                        </p>
+                    </div>
+
+                    <div class="alert alert-success mt-3">
+                        <h5><i class="fas fa-map-marked-alt me-2"></i>About This Visualization Tool</h5>
+                        <p>
+                            This traceroute visualization tool enhances the traditional text-based traceroute output with interactive features:
+                        </p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul>
+                                    <li><strong>Geographic Mapping:</strong> See the physical path your data takes across the globe</li>
+                                    <li><strong>Latency Visualization:</strong> Color-coded markers show connection quality at each hop</li>
+                                    <li><strong>Animated Packet Flow:</strong> Watch as packets travel from hop to hop</li>
+                                    <li><strong>Multiple Traceroute Methods:</strong> Choose between TCP, UDP, and ICMP protocols</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul>
+                                    <li><strong>Dual View Options:</strong> Toggle between map and list views</li>
+                                    <li><strong>Network Statistics:</strong> See summary data about your connection path</li>
+                                    <li><strong>Timeout Detection:</strong> Identify where packets are being dropped or blocked</li>
+                                    <li><strong>Automatic Fallback:</strong> The tool tries multiple methods to ensure results</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p class="mb-0">
+                            <strong>Educational Value:</strong> This tool helps network administrators diagnose issues, but also serves as an educational
+                            resource for students learning about internet infrastructure and network routing principles.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='traceroot/js/map.js') }}"></script>
+<script src="{{ url_for('static', filename='traceroot/js/traceroute.js') }}"></script>
+{% endblock %}
